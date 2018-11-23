@@ -1,7 +1,7 @@
 const express = require('express')
 const routes = express.Router()
 const connection = require('../database/database.js')
-const Product = require('../model/Products')
+const Product = require('../model/Products').Product
 
 const httpStatus = {
     statusOK: "Cadastrado com sucesso",
@@ -24,8 +24,9 @@ connection.then((connection) => {
             .then((result) => {
                 res.send(result)
             }
-            ).catch(
+            ).catch(() => {
                 res.send(httpStatus.invalidRequest)
+            }
             )
     });
 
@@ -41,16 +42,16 @@ connection.then((connection) => {
     })
 
     routes.get('/products/:id', (req, res) => {
-        
+
         return productRepo.findOne({ product_code: req.params.id })
-        .then((result) => {
-            res.status(200).send(result)
-        }).catch(() => {
-            res.status(400).send(httpStatus.invalidCode)
-        })
+            .then((result) => {
+                res.status(200).send(result)
+            }).catch(() => {
+                res.status(400).send(httpStatus.invalidCode)
+            })
     })
 
-    routes.put('/products/:id', (req,res) => {
+    routes.put('/products/:id', (req, res) => {
         let product = new Product();
         product = req.body
         productRepo.update(product).then(
@@ -60,12 +61,12 @@ connection.then((connection) => {
         )
     })
 
-    routes.delete('/products/:id', (req,res) => {
+    routes.delete('/products/:id', (req, res) => {
         return productRepo.delete({ product_code: req.params.id })
-        .then(
-            res.status(200).send(httpStatus.deleted)
-        )
-        .catch()
+            .then(
+                res.status(200).send(httpStatus.deleted)
+            )
+            .catch()
     })
 })
 
@@ -78,7 +79,7 @@ module.exports = routes
     //     res.send( await productRepo.findOne({product_code : req.params.id}))
     // })
 
-    
+
     // routes.get('/products', async (req, res) => {
     //      res.send(await  productRepo.find())
     // });
