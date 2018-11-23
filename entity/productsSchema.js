@@ -12,7 +12,7 @@ module.exports = new EntitySchema({
         },
         product_code: {
             type: "integer",
-            // unique: true
+            unique: true
         },
         description: {
             type: "text"

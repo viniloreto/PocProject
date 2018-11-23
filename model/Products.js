@@ -1,6 +1,7 @@
 class Product {
-    constructor(id, code, description) {
-        this.product_uid = id;
+    constructor( code, description) {
+        //constructor( code, description) {
+        //this.product_uid = id
         this.product_code = code;
         this.description = description;
     }
