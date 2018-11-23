@@ -1,4 +1,4 @@
-const routes = require('./routes/routes.js')
+const routes = require('./routes/productsRoutes.js')
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');

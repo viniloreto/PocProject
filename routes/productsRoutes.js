@@ -8,7 +8,8 @@ const httpStatus = {
     statusNotOK: "Falha ao inserir o produto",
     invalidRequest: "Falha ao buscar os produtos",
     invalidCode: "Código do produto inválido",
-    deleted: "Produto deletado com sucesso",
+    deletedOK: "Produto deletado com sucesso",
+    deletedNotOK: "Falha ao deletar o produto",
     statusUpOk: "Produto atualizado com sucesso",
     statusUpNotOk: "Falha ao atualizar o produto"
 }
@@ -34,10 +35,12 @@ connection.then((connection) => {
 
         let product = new Product();
         product = req.body
-        productRepo.save(product).then(
+        productRepo.save(product).then(() => {
             res.status(200).send(httpStatus.statusOK)
-        ).catch(
+        }
+        ).catch(() => {
             res.status(400).send(httpStatus.statusNotOK)
+        }
         )
     })
 
@@ -51,22 +54,27 @@ connection.then((connection) => {
             })
     })
 
-    routes.put('/products/:id', (req, res) => {
-        let product = new Product();
-        product = req.body
-        productRepo.update(product).then(
-            res.status(200).send(httpStatus.statusUpOK)
-        ).catch(
-            res.status(400).send(httpStatus.statusUpNotOK)
-        )
-    })
+
+    //TODO - METHOD PUT
+    // routes.put('/products/:id', (req, res) => {
+    //     let product = new Product();
+    //     product = req.body
+    //     productRepo.update(product).then(
+    //         res.status(200).send(httpStatus.statusUpOK)
+    //     ).catch(
+    //         res.status(400).send(httpStatus.statusUpNotOK)
+    //     )
+    // })
 
     routes.delete('/products/:id', (req, res) => {
         return productRepo.delete({ product_code: req.params.id })
-            .then(
-                res.status(200).send(httpStatus.deleted)
+            .then(() => {
+                res.status(200).send(httpStatus.deletedOK)
+            }
             )
-            .catch()
+            .catch(() => {
+                res.status(200).send(httpStatus.deletedNotOK)
+            })
     })
 })
 
