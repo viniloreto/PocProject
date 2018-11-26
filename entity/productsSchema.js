@@ -14,6 +14,9 @@ module.exports = new EntitySchema({
             type: "integer",
             unique: true
         },
+        product_name: {
+            type: "text"
+        },
         description: {
             type: "text"
         }
