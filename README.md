@@ -2,4 +2,4 @@
 
 Steps to run this project:
 
-Run npm start
+Run ``npm start`` to start the API
